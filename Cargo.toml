@@ -1,0 +1,8 @@
+[package]
+name = "tsc-util"
+version = "0.1.0"
+edition = "2021"
+description = "Tool for encoding/decoding Cave Story TSC scripts"
+
+[dependencies]
+clap = { version = "4.2.1", features = ["cargo", "derive", "string", "unicode"] }
