@@ -29,7 +29,7 @@ struct Args {
 fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
-    let mut processed_files = 0;
+    let processed_files: usize;
     let tsc_handler = TSC::new(args.verbose);
 
     if args.encode {
