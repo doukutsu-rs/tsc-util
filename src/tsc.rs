@@ -41,8 +41,24 @@ impl TSC {
         }
 
         if !input.is_dir() {
-            return Err(Error::new(ErrorKind::InvalidInput, "Invalid input dir provided"));
+            if input.extension().is_none() || input.extension().unwrap() != file_ext {
+                return Err(Error::new(
+                    ErrorKind::InvalidInput,
+                    format!("Invalid input file provided. File extension must be .{}", file_ext.to_string_lossy())
+                ));
+            }
+
+            let mut output_path = output_dir.to_path_buf();
+            output_path.push(input.file_name().unwrap());
+            output_path.set_extension(out_file_ext);
+
+            self.process_file(mode, &input, &output_path)?;
+
+            num += 1;
+
+            return Ok(num);
         }
+
 
         for entry in std::fs::read_dir(input)? {
             let path = entry?.path();
@@ -64,11 +80,7 @@ impl TSC {
                     }
                 };
             } else {
-                if path.extension().is_none() {
-                    continue;
-                }
-
-                if path.extension().unwrap() != file_ext {
+                if path.extension().is_none() || path.extension().unwrap() != file_ext {
                     continue;
                 }
 

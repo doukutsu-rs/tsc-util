@@ -9,7 +9,7 @@ use crate::tsc::TSC;
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Path to the dir containing files to be processed
+    /// Path to the or dir containing files to be processed
     input: String,
 
     #[arg(short, long, default_value_t = String::from("output"))]
